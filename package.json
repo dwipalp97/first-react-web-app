@@ -1,0 +1,31 @@
+{
+  "name": "reactwebapp",
+  "version": "1.0.0",
+  "description": "first react web app ",
+  "scripts": {
+    "test": "jest",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dwipalp97/first-react-web-app.git"
+  },
+  "author": "Dwipal Parmar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dwipalp97/first-react-web-app/issues"
+  },
+  "homepage": "https://github.com/dwipalp97/first-react-web-app#readme",
+  "devDependencies": {
+    "parcel": "^2.10.3",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "browserslist":[
+    "last 2 versions"
+  ]
+}
