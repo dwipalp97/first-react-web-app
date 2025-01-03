@@ -1,56 +1,58 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
+import Header from "./src/components/Header";
+import Body from "./src/components/Body";
+import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
+import About from "./src/components/About";
+import Contact from "./src/components/Contact";
+import Error from "./src/components/Error";
+import RestaurantMenuCard from "./src/components/RestaurantMenuCard";
+import { Provider } from "react-redux";
+import { AppStore } from "./src/utils/store/appStore";
 
-// const parent = React.createElement("div", { id: "parent" }, [
-//   React.createElement("div", { id: "child" }, [
-//     React.createElement(
-//       "h1",
-//       { id: "heading" },
-//       "Hello World from Child1 h1 tag "
-//     ),
-//     React.createElement(
-//       "h2",
-//       { id: "heading2" },
-//       "Hello World from Child1 h2 tag"
-//     ),
-//   ]),
-//   React.createElement("div", { id: "child" }, [
-//     React.createElement(
-//       "h1",
-//       { id: "heading" },
-//       "Hello World from Child2 h1 tag"
-//     ),
-//     React.createElement(
-//       "h2",
-//       { id: "heading2" },
-//       "Hello World from Child2 h2 tag"
-//     ),
-//   ]),
-// ]);
-// const root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(parent);
+const Grocery = lazy(()=> import("./src/components/Grocery"));
 
-const JsxHeading = ()=>(
-  <h1 className="heading" tabIndex={2}>
-    {" "}
-    Hello from dwipal through jsx heading
-  </h1>
-);
+const AppLayout = () => {
+  return (
+    <Provider store={AppStore}>
+    <div>
+      <Header />
+      <Outlet/>
+    </div>
+    </Provider>
+  );
+};
 
-const FnHeading = () =>(
-  <div id="container">
-   <JsxHeading/>
-    <h1 className="heading" tabIndex={2}>
-      {" "}
-      Hello from dwipal through fn heading
-    </h1>
-   </div>
-);
-
-// const heading = React.createElement(
-//   "h1",
-//   { id: "heading" },
-//   "Hello World from React"
-// );
+const appRouter = createBrowserRouter([
+  { 
+    path:"/", 
+    element: <AppLayout/>,
+    children:[
+      {
+        path:"/", 
+        element: <Body/>
+      },
+      {
+        path:"/about", 
+        element: <About/>
+      },
+      {
+        path:"/contact", 
+        element: <Contact/>
+      },
+      {
+        path:"/grocery", 
+        element: <Suspense fallback={<h1>Please wait Grocery store is loading</h1>}><Grocery/></Suspense>
+      },
+      {
+        path:"/restaurant/:resId", 
+        element: <RestaurantMenuCard/>
+      }
+    ], 
+    errorElement: <Error/>
+  },
+ 
+])
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<FnHeading/>);
+
+root.render(<RouterProvider router={appRouter} />);
